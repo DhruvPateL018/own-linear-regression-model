@@ -10,7 +10,7 @@ import pandas as pd
 
 df = pd.read_csv("StudentPerformance.csv")
 
-#scaling the data
+#scaling the data using min/max scaling
 X_min = df["Hours Studied"].min()  # 1
 X_max = df["Hours Studied"].max()  # 9
 Y_min = df["Performance Index"].min()  # 40
@@ -78,13 +78,13 @@ for i in range(epochs):
     if i % 50 == 0:
         print(f"Epoch {i}, Loss: {loss}")
 
-    
+#de normalizing the scaled values
 m_denorm = m * (Y_max - Y_min) / (X_max - X_min)
 b_denorm = Y_min + b * (Y_max - Y_min) - m_denorm * X_min
 
 
 
-
+# plot for loss curve
 plt.figure(figsize=(8,5))
 plt.plot(losses)
 plt.xlabel("Epochs")
@@ -109,6 +109,7 @@ print("Custom Model MSE:", mean_squared_error(y, y_pred_custom))
 
 print("Sklearn Model MSE:", mean_squared_error(y, y_pred_sklearn))
 print(f"sklearn model: m is {m_sklearn} and b is {b_sklearn}")
+
 
 
 
